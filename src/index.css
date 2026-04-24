@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply text-duck-ink antialiased;
+    background-color: #EFE2C1;
+    background-image: url("/paper-texture.svg");
+    background-size: 400px 400px;
+    background-repeat: repeat;
+  }
+  body {
+    font-feature-settings: "palt";
+  }
+  h1, h2, h3 {
+    letter-spacing: 0.02em;
+  }
+}
+
+@layer components {
+  .paper {
+    background-color: #F5EAD0;
+    background-image: url("/paper-grain.svg");
+    background-size: 240px 240px;
+  }
+  .paper-dark {
+    background-color: #E6D4A8;
+    background-image: url("/paper-grain.svg");
+    background-size: 240px 240px;
+  }
+  .retro-frame {
+    @apply relative border-[3px] border-duck-ink bg-[#F5EAD0] shadow-retro;
+  }
+  .retro-frame::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid #2A1F14;
+    pointer-events: none;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-none border-[3px] border-duck-ink bg-duck-red px-7 py-3 text-base font-black text-white tracking-wider shadow-retro transition hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-retroLg active:translate-x-0 active:translate-y-0 active:shadow-retroSm;
+    font-family: "RocknRoll One", "Dela Gothic One", "Hiragino Sans", sans-serif;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-none border-[3px] border-duck-ink bg-duck-yellow px-7 py-3 text-base font-black text-duck-ink tracking-wider shadow-retro transition hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-retroLg active:translate-x-0 active:translate-y-0 active:shadow-retroSm;
+    font-family: "RocknRoll One", "Dela Gothic One", "Hiragino Sans", sans-serif;
+  }
+  .card {
+    @apply relative rounded-none border-[3px] border-duck-ink bg-[#F5EAD0] shadow-retro;
+  }
+  .display-title {
+    font-family: "Dela Gothic One", "RocknRoll One", "Hiragino Sans", sans-serif;
+    letter-spacing: 0.04em;
+  }
+  .kanban-title {
+    font-family: "RocknRoll One", "Dela Gothic One", "Hiragino Sans", sans-serif;
+    letter-spacing: 0.06em;
+  }
+  .stamp {
+    @apply inline-flex items-center justify-center rounded-full border-[3px] border-duck-red text-duck-red font-black;
+    font-family: "Shippori Mincho", "Noto Serif JP", serif;
+    transform: rotate(-8deg);
+  }
+  .halftone {
+    background-image: radial-gradient(#2A1F14 1px, transparent 1.4px);
+    background-size: 8px 8px;
+  }
+  /* SVG マーカー用のホバー/選択時リフト */
+  .marker-lift {
+    transition: transform 0.14s ease-out;
+    will-change: transform;
+  }
+  .marker-lift.is-active { transform: scale(1.3); }
+  .marker-lift.is-hovered {
+    transform: scale(1.45);
+    z-index: 999; /* SVG では描画順優先だが念のため */
+  }
+  .marker-lift.is-cluster.is-hovered { transform: scale(1.2); }
+
+  /* ===== レアリティ・エフェクト ===== */
+  /* UR: メタリックにシフトする地色 + スイープ光沢 */
+  .rarity-ur-bg {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      #FEE8A0 0%,
+      #E3B84A 15%,
+      #FFFFFF 32%,
+      #CFB88A 50%,
+      #F5EAD0 68%,
+      #E3B84A 85%,
+      #FEE8A0 100%
+    );
+    background-size: 220% 220%;
+    animation: ur-metallic 5s ease-in-out infinite;
+    overflow: hidden;
+  }
+  .rarity-ur-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 60%
+    );
+    animation: ur-sweep 3.5s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes ur-metallic {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+  }
+  @keyframes ur-sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .rarity-ur-badge {
+    background: linear-gradient(90deg, #B8902B, #FEE8A0, #B8902B, #FEE8A0);
+    background-size: 300% 100%;
+    color: #2A1F14;
+    border: 1.5px solid #2A1F14;
+    font-weight: 900;
+    animation: ur-metallic-badge 2.2s linear infinite;
+  }
+  @keyframes ur-metallic-badge {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 300% 0%; }
+  }
+
+  /* SSR: 金銀の粒子が立ち上る */
+  .rarity-ssr-bg {
+    position: relative;
+    background: linear-gradient(135deg, #FFF4C2 0%, #E3B84A 50%, #CFB88A 100%);
+    overflow: hidden;
+  }
+  .rarity-ssr-particle {
+    position: absolute;
+    bottom: -8%;
+    font-size: 14px;
+    color: #B8902B;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.9);
+    animation: ssr-float 4s linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+  @keyframes ssr-float {
+    0% { transform: translateY(0) scale(0.4); opacity: 0; }
+    15% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(-800%) scale(1.15); opacity: 0; }
+  }
+
+  /* 一般のレア度背景（N/R/SR） */
+  .rarity-n-bg  { background: linear-gradient(135deg, #EEE7D3 0%, #D9CFB0 100%); }
+  .rarity-r-bg  { background: linear-gradient(135deg, #D5E4EE 0%, #9CBED7 100%); }
+  .rarity-sr-bg { background: linear-gradient(135deg, #E3D6EF 0%, #B49BD4 100%); }
+
+  /* ===== パフォーマンス: オフスクリーン要素の描画スキップ ===== */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 220px;
+  }
+
+  /* ===== スライドダウン登場 ===== */
+  .animate-slide-down {
+    animation: slide-down-in 0.22s ease-out;
+    overflow: hidden;
+  }
+  @keyframes slide-down-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 200px;
+    }
+  }
+
+  /* ===== 未発見個体（真っ黒シルエット） ===== */
+  .silhouette {
+    filter: brightness(0);
+  }
+  .unfound-bg {
+    background: linear-gradient(135deg, #3A2F22 0%, #2A1F14 60%, #1C140A 100%);
+    position: relative;
+  }
+  .unfound-bg::after {
+    content: "?";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(227, 184, 74, 0.08);
+    font-size: 200px;
+    font-weight: 900;
+    font-family: "Dela Gothic One", sans-serif;
+    pointer-events: none;
+  }
+  .unfound-stripe {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 204, 50, 0.15) 0 10px,
+      transparent 10px 22px
+    );
+  }
+}

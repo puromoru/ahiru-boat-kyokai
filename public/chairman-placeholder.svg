@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF4B8"/>
+      <stop offset="100%" stop-color="#FFD700"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <!-- person silhouette -->
+  <circle cx="200" cy="190" r="70" fill="#8a6a2a" opacity="0.55"/>
+  <path d="M60 500 C60 360 140 300 200 300 C260 300 340 360 340 500 Z" fill="#8a6a2a" opacity="0.55"/>
+  <!-- little duck on shoulder -->
+  <g transform="translate(260 240)">
+    <circle cx="0" cy="0" r="22" fill="#FFD700" stroke="#E96E00" stroke-width="3"/>
+    <circle cx="6" cy="-4" r="3" fill="#222"/>
+    <path d="M14 2 L28 4 L14 8 Z" fill="#FF8C1A" stroke="#E96E00" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="440" text-anchor="middle" font-family="serif" font-size="20" fill="#5a3e12">
+    会長の写真をここに
+  </text>
+  <text x="200" y="468" text-anchor="middle" font-family="serif" font-size="14" fill="#7a5620">
+    public/chairman.jpg に配置
+  </text>
+</svg>
