@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ahiru-boat-kyokai.vercel.app/sitemap.xml
